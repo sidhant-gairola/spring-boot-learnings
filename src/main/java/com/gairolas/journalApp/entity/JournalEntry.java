@@ -1,6 +1,5 @@
 package com.gairolas.journalApp.entity;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 import org.bson.types.ObjectId;
