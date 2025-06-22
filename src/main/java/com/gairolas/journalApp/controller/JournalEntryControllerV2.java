@@ -28,6 +28,9 @@ public class JournalEntryControllerV2 {
     @GetMapping("{userName}")
     public ResponseEntity<?> getAllJournalEntriesOfUser(@PathVariable String userName) {
         User user = userService.findByUserName(userName);
+        if (user == null) {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
         List<JournalEntry> all = user.getJournalEntries();
         if (all != null && !all.isEmpty()) {
             return new ResponseEntity<>(journalEntryService.getAllEntries(), HttpStatus.OK);
@@ -66,12 +69,11 @@ public class JournalEntryControllerV2 {
         JournalEntry oldEntry = journalEntryService.getEntryById(myId).orElse(null);
         if (oldEntry != null) {
             oldEntry.setTitle(newEntry.getTitle() != null &&
-            !newEntry.getTitle().equals("") ? newEntry.getTitle()
-            : oldEntry.getTitle());
+                    !newEntry.getTitle().equals("") ? newEntry.getTitle()
+                            : oldEntry.getTitle());
             oldEntry.setContent(
-            newEntry.getContent() != null && !newEntry.getContent().equals("") ?
-            newEntry.getContent()
-            : oldEntry.getContent());
+                    newEntry.getContent() != null && !newEntry.getContent().equals("") ? newEntry.getContent()
+                            : oldEntry.getContent());
             journalEntryService.saveEntry(oldEntry);
             return new ResponseEntity<>(HttpStatus.OK);
         }
