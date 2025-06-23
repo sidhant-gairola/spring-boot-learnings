@@ -8,14 +8,21 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import com.gairolas.journalApp.entity.User;
+import com.gairolas.journalApp.repository.UserRepository;
 import com.gairolas.journalApp.service.UserService;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
+    private final UserRepository userRepository;
+
     @Autowired
     private UserService userService;
+
+    UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @PutMapping
     public ResponseEntity<?> updateUser(@RequestBody User user) {
@@ -26,6 +33,13 @@ public class UserController {
         userInDb.setUserName(user.getUserName());
         userInDb.setPassword(user.getPassword());
         userService.saveEntry(userInDb);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteUserByUserName() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        userRepository.deleteByUserName(authentication.getName());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
