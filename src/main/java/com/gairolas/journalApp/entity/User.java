@@ -14,7 +14,7 @@ import com.mongodb.lang.NonNull;
 import lombok.Data;
 
 @Document(collection = "users")
-@Data
+@Data   // includes getters setters requiredargsconstructors etc.
 
 public class User {
 
@@ -27,4 +27,5 @@ public class User {
     private String password;
     @DBRef
     private List<JournalEntry> journalEntries = new ArrayList<>();
+    private List<String> roles;
 }
