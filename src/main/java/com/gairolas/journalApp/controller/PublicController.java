@@ -23,7 +23,7 @@ public class PublicController {
     public ResponseEntity<?> registerUser(@RequestBody User user) {
         user.setPassword(user.getPassword());
         user.setRoles(Arrays.asList("USER"));
-        userService.saveEntry(user);
+        userService.saveNewUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
     }
 }
