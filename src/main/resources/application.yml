@@ -1,6 +1,10 @@
 spring:
     data:
         mongodb:
-            uri: your-mongodb-uri
+            uri: your-mongo-uri
             database: journaldb
             auto-index-creation: true
+
+
+    profiles:
+        active: dev

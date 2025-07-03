@@ -19,6 +19,11 @@ public class PublicController {
     @Autowired
     private UserService userService;
 
+    @PostMapping("/health-check")
+    public ResponseEntity<?> checkHealth() {
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
         user.setPassword(user.getPassword());
