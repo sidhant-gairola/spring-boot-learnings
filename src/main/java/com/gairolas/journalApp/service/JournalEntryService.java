@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,7 @@ import com.gairolas.journalApp.entity.User;
 import com.gairolas.journalApp.repository.JournalEntryRepository;
 
 @Component
+@Slf4j
 public class JournalEntryService {
 
     @Autowired
@@ -31,7 +33,7 @@ public class JournalEntryService {
             user.getJournalEntries().add(savedEntry);
             userService.saveUser(user);
         } catch (Exception e) {
-            System.out.println(e);
+            log.error("Error: ", e);
             throw new RuntimeException("An error occured while saving new entry", e);
         }
     }

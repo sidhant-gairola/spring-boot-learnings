@@ -1,7 +1,7 @@
 spring:
     data:
         mongodb:
-            uri: mongodb-uri
+            uri: journaldb-uri
             database: journaldb
             auto-index-creation: true
 
