@@ -1,5 +1,7 @@
 package com.gairolas.journalApp.controller;
 
+import com.gairolas.journalApp.api.response.WeatherResponse;
+import com.gairolas.journalApp.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.http.HttpStatus;
@@ -20,7 +22,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    UserController(UserRepository userRepository) {
+    @Autowired
+    private WeatherService weatherService;
+
+    public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -41,5 +46,16 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         userRepository.deleteByUserName(authentication.getName());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> greeting() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        WeatherResponse weatherResponse = weatherService.getWeather("Haridwar");
+        String greeting = "";
+        if (weatherResponse != null) {
+            greeting = ", Weather feels like : " + weatherResponse.getCurrent().getTemperature();
+        }
+        return new ResponseEntity<>("Hi " + authentication.getName() + greeting, HttpStatus.ACCEPTED);
     }
 }
