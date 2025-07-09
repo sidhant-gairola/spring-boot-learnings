@@ -1,10 +1,16 @@
 spring:
-    data:
-        mongodb:
-            uri: MONGODB_URI
-            database: journaldb
-            auto-index-creation: true
+  data:
+    mongodb:
+      uri: mongo-uri
+      database: journaldb
+      auto-index-creation: true
 
 
-    profiles:
-        active: dev
+  profiles:
+    active: dev
+
+weather:
+  api:
+    key: enter-your-key
+  complete:
+    api: enter-your-api

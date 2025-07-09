@@ -2,15 +2,20 @@ package com.gairolas.journalApp.service;
 
 import com.gairolas.journalApp.api.response.WeatherResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-@Component
+@Service
 public class WeatherService {
-    private static final String apiKey = API;
-    private static final String api = "https://api.weatherstack.com/current?access_key=API_KEY&query=CITY";
+
+    @Value("${weather.api.key}")
+    private String apiKey;
+
+    @Value("${weather.complete.api}")
+    private String api;
 
     @Autowired
     private RestTemplate restTemplate;
