@@ -2,6 +2,7 @@ package com.gairolas.journalApp.controller;
 
 import java.util.List;
 
+import com.gairolas.journalApp.cache.AppCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,9 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AppCache appCache;
     
     @GetMapping("/all-users")
     public ResponseEntity<?> getAllUsers() {
@@ -34,6 +38,11 @@ public class AdminController {
     @PostMapping("/create-admin-user")
     public void createAdmin(@RequestBody User user) {
         userService.saveAdmin(user);
+    }
+
+    @GetMapping("clear-app-cache")
+    public void clearAppCache() {
+        appCache.init();
     }
     
 }
