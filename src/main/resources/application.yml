@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: mongo-uri
+      uri: db-uri
       database: journaldb
       auto-index-creation: true
 
@@ -11,6 +11,4 @@ spring:
 
 weather:
   api:
-    key: enter-your-key
-  complete:
-    api: enter-your-api
+    key: api-key
