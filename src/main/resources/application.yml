@@ -1,14 +1,14 @@
 spring:
   data:
     mongodb:
-      uri: mongodb-uri
+      uri: mongodb+srv://ssid7074:3TyzIAHYM51KO5fM@cluster0.vl44har.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
       database: journaldb
       auto-index-creation: true
   mail:
     host: smtp.gmail.com
     port: 587
-    username: gmail@gmail.com
-    password: xxxx xxxx xxxx xxxx
+    username: ssid7074@gmail.com
+    password: frqw prms bdxu jpzq
     properties:
       mail:
         smtp:
@@ -22,4 +22,4 @@ spring:
 
 weather:
   api:
-    key: key
+    key: caf8e2a357024793efedaffa31fec31f
