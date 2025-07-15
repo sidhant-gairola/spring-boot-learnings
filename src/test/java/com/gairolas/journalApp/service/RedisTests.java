@@ -4,16 +4,19 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 
 @SpringBootTest
-public class EmailServiceTests {
+public class RedisTests {
 
     @Autowired
-    private EmailService emailService;
+    private RedisTemplate redisTemplate;
 
     @Disabled
     @Test
     public void testSendMail() {
-        emailService.sendEmail("sidhantgairola02@gmail.com", "Testing java mail sender.", "kaise hai aap?");
+        redisTemplate.opsForValue().set("email", "sidhant@gmail.com");
+        Object city = redisTemplate.opsForValue().get("city");
+
     }
 }

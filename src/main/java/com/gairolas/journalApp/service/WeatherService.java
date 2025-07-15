@@ -12,20 +12,30 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class WeatherService {
 
-    @Value("${weather.api.key}")
+    @Value("${weather.api.key}")    // to fetch value of mapped key from .yml file
     private String apiKey;
 
     @Autowired
-    private RestTemplate restTemplate;
+    private RestTemplate restTemplate;  // to send request directly from spring instead of from postman
 
     @Autowired
-    private AppCache appCache;
+    private AppCache appCache;  // to store the journal entries in a local storage such as map for faster accessibility
 
+    @Autowired
+    private RedisService redisService;  // to use redis services/methods such as get, set, etc.
 
     public WeatherResponse getWeather(String city) {
-        String finalAPI = appCache.appCache.get("weather_api").replace("<apiKey>", apiKey).replace("<city>", city);
-        ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalAPI, HttpMethod.GET, null, WeatherResponse.class);
-        WeatherResponse body = response.getBody();
-        return body;
+        WeatherResponse weatherResponse = redisService.get("weather_of_" + city, WeatherResponse.class);// key and what type of data is sent as a second parameter
+        if (weatherResponse != null) {
+            return weatherResponse;
+        } else {
+            String finalAPI = appCache.appCache.get("weather_api").replace("<apiKey>", apiKey).replace("<city>", city);
+            ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalAPI, HttpMethod.GET, null, WeatherResponse.class);
+            WeatherResponse body = response.getBody();
+            if (body != null) {
+                redisService.set("weather_of_" + city, body, 300l);
+            }
+            return body;
+        }
     }
 }

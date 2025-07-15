@@ -12,6 +12,7 @@ import java.util.Map;
 
 @Component
 public class AppCache {
+
     @Autowired
     private ConfigJournalAppRepository configJournalAppRepository;
 
