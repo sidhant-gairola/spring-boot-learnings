@@ -43,6 +43,7 @@ public class RedisService {
             ObjectMapper mapper = new ObjectMapper();
             String jsonValue = mapper.writeValueAsString(o);
             redisTemplate.opsForValue().set(key, jsonValue, ttl, TimeUnit.SECONDS);  // ttl is the timelimit till redis store and timeunit is the type in which we will give time
+            log.info("✅ Cached key: {} for {} seconds", key, ttl);
         } catch (Exception e) {
             log.error("Exception : ", e);
         }

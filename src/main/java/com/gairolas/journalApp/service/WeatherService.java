@@ -25,7 +25,8 @@ public class WeatherService {
     private RedisService redisService;  // to use redis services/methods such as get, set, etc.
 
     public WeatherResponse getWeather(String city) {
-        WeatherResponse weatherResponse = redisService.get("weather_of_" + city, WeatherResponse.class);// key and what type of data is sent as a second parameter
+        String key = "weather_of_" + city.toLowerCase();
+        WeatherResponse weatherResponse = redisService.get(key, WeatherResponse.class);// key and what type of data is sent as a second parameter
         if (weatherResponse != null) {
             return weatherResponse;
         } else {
@@ -33,7 +34,7 @@ public class WeatherService {
             ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalAPI, HttpMethod.GET, null, WeatherResponse.class);
             WeatherResponse body = response.getBody();
             if (body != null) {
-                redisService.set("weather_of_" + city, body, 300l);
+                redisService.set(key, body, 300l);
             }
             return body;
         }
